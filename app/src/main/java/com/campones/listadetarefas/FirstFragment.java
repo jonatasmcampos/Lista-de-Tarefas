@@ -1,5 +1,6 @@
 package com.campones.listadetarefas;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -50,7 +51,13 @@ public class FirstFragment extends Fragment {
                         new RecyclerItemClickListener.OnItemClickListener() {
                             @Override
                             public void onItemClick(View view, int position) {
-                                Log.i("clique", "onItemClick");
+                                //Recuperar tarefa para edição
+                                Tarefa tarefaSelecionada = listaTarefas.get(position);
+
+                                //Enviar tarefa para tela adicionar tarefa
+                                Intent intent = new Intent( getContext(), AdicionarTarefaActivity.class);
+                                intent.putExtra("tarefaSelecionada", tarefaSelecionada);
+                                startActivity( intent );
                             }
 
                             @Override

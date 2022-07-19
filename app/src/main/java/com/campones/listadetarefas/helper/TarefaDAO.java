@@ -25,7 +25,6 @@ public class TarefaDAO implements ITarefaDAO{
 
     @Override
     public boolean salvar(Tarefa tarefa) {
-
         ContentValues cv = new ContentValues();
         cv.put( "nome", tarefa.getNomeTarefa() );
 
@@ -37,11 +36,22 @@ public class TarefaDAO implements ITarefaDAO{
             return false;
         }
         return true;
+
     }
 
     @Override
     public boolean atualizar(Tarefa tarefa) {
-        return false;
+        ContentValues cv = new ContentValues();
+        cv.put( "nome", tarefa.getNomeTarefa() );
+        try{
+            String[] args = { String.valueOf(tarefa.getId()) };
+            escreve.update(DbHelper.TABELA_TAREFAS, cv, "id=?", args );
+            Log.i("INFO", "Tarefa atualizada com sucesso! ");
+        }catch (Exception e){
+            Log.e("INFO", "Erro ao atualizada tarefa! " + e.getMessage());
+            return false;
+        }
+        return true;
     }
 
     @Override
