@@ -8,12 +8,20 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.campones.listadetarefas.helper.TarefaDAO;
+import com.campones.listadetarefas.model.Tarefa;
+import com.google.android.material.textfield.TextInputEditText;
+
 public class AdicionarTarefaActivity extends AppCompatActivity {
+
+    private TextInputEditText editTarefa;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adicionar_tarefa);
+
+            editTarefa = findViewById(R.id.textTarefa);
     }
 
     //Configurando o menu
@@ -29,7 +37,16 @@ public class AdicionarTarefaActivity extends AppCompatActivity {
         switch (item.getItemId()){
             case R.id.itemSalvar:
                 //Executa ação para salvar
-                Toast.makeText(this, "Botao salvar pressionado", Toast.LENGTH_SHORT).show();
+                TarefaDAO tarefaDAO = new TarefaDAO( getApplicationContext() );
+
+                String nomeTarefa = editTarefa.getText().toString();
+                if( !nomeTarefa.isEmpty() ){
+                    Tarefa tarefa = new Tarefa();
+                    tarefa.setNomeTarefa( nomeTarefa );
+                    tarefaDAO.salvar( tarefa );
+                    finish();
+                }
+
                 break;
         }
         return super.onOptionsItemSelected(item);

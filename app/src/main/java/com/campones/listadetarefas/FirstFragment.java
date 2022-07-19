@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.campones.listadetarefas.adapter.TarefaAdapter;
 import com.campones.listadetarefas.databinding.FragmentFirstBinding;
 import com.campones.listadetarefas.helper.RecyclerItemClickListener;
+import com.campones.listadetarefas.helper.TarefaDAO;
 import com.campones.listadetarefas.model.Tarefa;
 
 import java.util.ArrayList;
@@ -69,13 +70,8 @@ public class FirstFragment extends Fragment {
 
     public void carregarListaTarefas(){
         //Listar tarefas
-        Tarefa tarefa1 = new Tarefa();
-        tarefa1.setNomeTarefa("Ir ao mercado");
-        listaTarefas.add( tarefa1 );
-
-        Tarefa tarefa2 = new Tarefa();
-        tarefa2.setNomeTarefa("Ir ao feira");
-        listaTarefas.add( tarefa2 );
+        TarefaDAO tarefaDAO = new TarefaDAO( getActivity() );
+        listaTarefas = tarefaDAO.listar();
 
         //Configurar um adapter
         tarefaAdapter = new TarefaAdapter( listaTarefas );
